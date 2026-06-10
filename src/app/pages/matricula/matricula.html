@@ -1,0 +1,111 @@
+<app-navbar></app-navbar>
+
+<main class="matricula-page">
+  <section class="card">
+    <div class="steps">
+      <div [class.active]="paso === 1" [class.done]="paso > 1">1<br><span>Estudiante</span></div>
+      <div [class.active]="paso === 2" [class.done]="paso > 2">2<br><span>Apoderado</span></div>
+      <div [class.active]="paso === 3" [class.done]="paso > 3">3<br><span>Documentos</span></div>
+      <div [class.active]="paso === 4">4<br><span>Confirmación</span></div>
+    </div>
+
+    <section *ngIf="paso === 1">
+      <h2>Datos del estudiante</h2>
+
+      <label>Nombres y apellidos</label>
+      <input [(ngModel)]="solicitud.nombreEstudiante" placeholder="Ingrese nombres y apellidos">
+
+      <label>DNI</label>
+      <input [(ngModel)]="solicitud.dniEstudiante" placeholder="Ingrese DNI">
+
+      <label>Fecha de nacimiento</label>
+      <input [(ngModel)]="solicitud.fechaNacimiento" type="date">
+
+      <label>Grado / Nivel</label>
+      <select [(ngModel)]="solicitud.grado">
+        <option value="">Seleccione grado o nivel</option>
+        <option>1° Primaria</option>
+        <option>2° Primaria</option>
+        <option>3° Primaria</option>
+        <option>1° Secundaria</option>
+        <option>2° Secundaria</option>
+      </select>
+
+      <label>Institución educativa</label>
+      <select [(ngModel)]="solicitud.institucion">
+        <option value="">Seleccione institución</option>
+        <option>I.E. Mariscal Castilla</option>
+        <option>I.E. Santa Isabel</option>
+        <option>I.E. María Inmaculada</option>
+        <option>I.E. Nuestra Señora del Rosario</option>
+      </select>
+    </section>
+
+    <section *ngIf="paso === 2">
+      <h2>Datos del apoderado</h2>
+
+      <label>Nombres y apellidos</label>
+      <input [(ngModel)]="solicitud.nombreApoderado" placeholder="Ingrese nombres y apellidos">
+
+      <label>DNI</label>
+      <input [(ngModel)]="solicitud.dniApoderado" placeholder="Ingrese DNI">
+
+      <label>Teléfono</label>
+      <input [(ngModel)]="solicitud.telefono" placeholder="Ingrese teléfono">
+
+      <label>Correo electrónico</label>
+      <input [(ngModel)]="solicitud.correo" placeholder="Ingrese correo">
+
+      <label>Parentesco</label>
+      <select [(ngModel)]="solicitud.parentesco">
+        <option value="">Seleccione parentesco</option>
+        <option>Padre</option>
+        <option>Madre</option>
+        <option>Abuelo/a</option>
+        <option>Tutor legal</option>
+      </select>
+    </section>
+
+    <section *ngIf="paso === 3">
+      <h2>Documentos requeridos</h2>
+
+      <div class="document-row">
+        <span>DNI del estudiante</span>
+        <button>Seleccionar archivo</button>
+      </div>
+
+      <div class="document-row">
+        <span>DNI del apoderado</span>
+        <button>Seleccionar archivo</button>
+      </div>
+
+      <div class="document-row">
+        <span>Certificado de estudios</span>
+        <button>Seleccionar archivo</button>
+      </div>
+
+      <p class="info">Formatos permitidos: JPG, PNG o PDF. Tamaño máximo: 5MB.</p>
+    </section>
+
+    <section *ngIf="paso === 4" class="confirmacion">
+      <div class="check">✓</div>
+      <h2>Confirmación de solicitud</h2>
+      <p>Revise que los datos ingresados sean correctos antes de finalizar.</p>
+
+      <div class="summary">
+        <strong>Estudiante:</strong> {{ solicitud.nombreEstudiante || 'No registrado' }} <br>
+        <strong>DNI:</strong> {{ solicitud.dniEstudiante || 'No registrado' }} <br>
+        <strong>Grado:</strong> {{ solicitud.grado || 'No registrado' }} <br>
+        <strong>Institución:</strong> {{ solicitud.institucion || 'No registrado' }}
+      </div>
+    </section>
+
+    <div class="actions">
+      <button class="secondary" *ngIf="paso > 1" (click)="anterior()">Anterior</button>
+      <button class="primary" *ngIf="paso < 4" (click)="siguiente()">Siguiente</button>
+      <button class="primary" *ngIf="paso === 4" (click)="finalizar()">Finalizar</button>
+    </div>
+  </section>
+</main>
+
+<app-footer></app-footer>
