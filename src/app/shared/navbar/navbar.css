@@ -1,0 +1,92 @@
+.navbar {
+  width: 100%;
+  background: #0f2f63;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 28px;
+  box-sizing: border-box;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo-box {
+  width: 52px;
+  height: 52px;
+  background: white;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.logo-box img {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+}
+
+.brand h1 {
+  font-size: 18px;
+  margin: 0;
+  font-weight: 800;
+}
+
+.brand p {
+  margin: 2px 0 0;
+  font-size: 12px;
+  opacity: 0.9;
+}
+
+.system-title {
+  font-size: 18px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.user-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-icon {
+  width: 42px;
+  height: 42px;
+  background: white;
+  color: #0f2f63;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+
+.user-box strong {
+  display: block;
+  font-size: 14px;
+}
+
+.user-box span {
+  display: block;
+  font-size: 12px;
+  opacity: 0.9;
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    gap: 14px;
+    text-align: center;
+  }
+
+  .user-box {
+    justify-content: center;
+  }
+}
