@@ -6,4 +6,6 @@ import { Component } from '@angular/core';
   templateUrl: './matricula.html',
   styleUrl: './matricula.css',
 })
-export class Matricula {}
+export class Matricula {
+    
+}

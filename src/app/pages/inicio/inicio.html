@@ -1,1 +1,40 @@
-<p>inicio works!</p>
+<app-navbar></app-navbar>
+
+<main class="inicio-page">
+  <section class="intro">
+    <h2>¿Qué desea hacer hoy?</h2>
+    <p>
+      Seleccione una opción para continuar con el proceso de matrícula escolar.
+    </p>
+  </section>
+
+  <section class="options">
+    <article class="option-card" (click)="irMatricula()">
+      <div class="icon blue">📋</div>
+      <h3>Nueva matrícula</h3>
+      <p>Registre una nueva solicitud de matrícula.</p>
+      <button>Iniciar registro</button>
+    </article>
+
+    <article class="option-card" (click)="irSeguimiento()">
+      <div class="icon green">🔎</div>
+      <h3>Consultar estado</h3>
+      <p>Revise el estado de su solicitud de matrícula.</p>
+      <button>Ver seguimiento</button>
+    </article>
+
+    <article class="option-card">
+      <div class="icon yellow">ℹ️</div>
+      <h3>Información</h3>
+      <p>Consulte requisitos, documentos y pasos del trámite.</p>
+      <button>Ver información</button>
+    </article>
+  </section>
+
+  <section class="notice">
+    <strong>Recomendación:</strong>
+    Tenga a la mano el DNI del estudiante, DNI del apoderado y los documentos solicitados.
+  </section>
+</main>
+
+<app-footer></app-footer>
