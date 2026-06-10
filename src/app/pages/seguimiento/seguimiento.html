@@ -1,1 +1,42 @@
-<p>seguimiento works!</p>
+<app-navbar></app-navbar>
+
+<main class="seguimiento-page">
+  <section class="card">
+    <h2>Mis solicitudes</h2>
+    <p class="subtitle">Revise el estado de sus solicitudes de matrícula.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Código</th>
+          <th>Estudiante</th>
+          <th>Grado</th>
+          <th>Institución</th>
+          <th>Fecha</th>
+          <th>Estado</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let solicitud of solicitudes">
+          <td>{{ solicitud.codigo }}</td>
+          <td>{{ solicitud.nombreEstudiante }}</td>
+          <td>{{ solicitud.grado }}</td>
+          <td>{{ solicitud.institucion }}</td>
+          <td>{{ solicitud.fechaRegistro }}</td>
+          <td>
+            <span class="estado" [ngClass]="{
+              'revision': solicitud.estado === 'En revisión',
+              'aprobado': solicitud.estado === 'Aprobado',
+              'observado': solicitud.estado === 'Observado'
+            }">
+              {{ solicitud.estado }}
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+</main>
+
+<app-footer></app-footer>

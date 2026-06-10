@@ -1,0 +1,76 @@
+.seguimiento-page {
+  min-height: calc(100vh - 120px);
+  background: #f4f7fb;
+  padding: 50px 80px;
+  box-sizing: border-box;
+}
+
+.card {
+  background: white;
+  border-radius: 20px;
+  padding: 36px;
+  box-shadow: 0 8px 24px rgba(15, 47, 99, 0.12);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+h2 {
+  color: #123263;
+  font-size: 30px;
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  color: #5d6b82;
+  margin-bottom: 28px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  text-align: left;
+  background: #eaf2ff;
+  color: #123263;
+  padding: 16px;
+}
+
+td {
+  padding: 16px;
+  border-bottom: 1px solid #e0e7f0;
+  color: #1d2a44;
+}
+
+.estado {
+  padding: 8px 14px;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.revision {
+  background: #fff3cd;
+  color: #9a6700;
+}
+
+.aprobado {
+  background: #dff7e8;
+  color: #168653;
+}
+
+.observado {
+  background: #ffe1e1;
+  color: #b42318;
+}
+
+@media (max-width: 900px) {
+  .seguimiento-page {
+    padding: 24px 16px;
+  }
+
+  table {
+    font-size: 13px;
+  }
+}
