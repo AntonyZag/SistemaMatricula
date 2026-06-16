@@ -1,0 +1,166 @@
+.dashboard-page {
+  min-height: calc(100vh - 120px);
+  background: #f4f7fb;
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 28px;
+  padding: 40px 60px;
+  box-sizing: border-box;
+}
+
+.sidebar {
+  background: #0f2f63;
+  color: white;
+  border-radius: 20px;
+  padding: 28px 20px;
+  min-height: 520px;
+}
+
+.sidebar h3 {
+  margin: 0 0 24px;
+  font-size: 24px;
+}
+
+.sidebar a {
+  display: block;
+  padding: 14px 16px;
+  border-radius: 12px;
+  margin-bottom: 10px;
+  color: white;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.sidebar a.active,
+.sidebar a:hover {
+  background: #2868e8;
+}
+
+.content h2 {
+  color: #123263;
+  font-size: 32px;
+  margin: 0 0 8px;
+}
+
+.subtitle {
+  color: #5d6b82;
+  margin-bottom: 28px;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  margin-bottom: 28px;
+}
+
+.stat-card {
+  background: white;
+  border-radius: 18px;
+  padding: 22px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 8px 24px rgba(15, 47, 99, 0.12);
+}
+
+.stat-card span {
+  width: 52px;
+  height: 52px;
+  background: #eaf2ff;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+}
+
+.stat-card p {
+  margin: 0;
+  color: #5d6b82;
+}
+
+.stat-card strong {
+  display: block;
+  font-size: 30px;
+  color: #123263;
+}
+
+.table-card {
+  background: white;
+  border-radius: 20px;
+  padding: 28px;
+  box-shadow: 0 8px 24px rgba(15, 47, 99, 0.12);
+}
+
+.table-card h3 {
+  color: #123263;
+  margin-top: 0;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  background: #eaf2ff;
+  color: #123263;
+  padding: 14px;
+  text-align: left;
+}
+
+td {
+  padding: 14px;
+  border-bottom: 1px solid #e0e7f0;
+  color: #1d2a44;
+}
+
+.estado {
+  padding: 7px 12px;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.revision {
+  background: #fff3cd;
+  color: #9a6700;
+}
+
+.aprobado {
+  background: #dff7e8;
+  color: #168653;
+}
+
+.observado {
+  background: #ffe1e1;
+  color: #b42318;
+}
+
+button {
+  background: #2868e8;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 9px 16px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+@media (max-width: 1000px) {
+  .dashboard-page {
+    grid-template-columns: 1fr;
+    padding: 24px 16px;
+  }
+
+  .stats {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .stats {
+    grid-template-columns: 1fr;
+  }
+}

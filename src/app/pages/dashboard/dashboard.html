@@ -1,1 +1,92 @@
-<p>dashboard works!</p>
+<app-navbar></app-navbar>
+
+<main class="dashboard-page">
+  <aside class="sidebar">
+    <h3>Panel</h3>
+    <a class="active">Dashboard</a>
+    <a>Solicitudes</a>
+    <a>Aprobar solicitudes</a>
+    <a>Solicitudes observadas</a>
+    <a>Reportes</a>
+    <a>Cerrar sesión</a>
+  </aside>
+
+  <section class="content">
+    <h2>Dashboard administrativo</h2>
+    <p class="subtitle">Resumen general de solicitudes de matrícula escolar.</p>
+
+    <div class="stats">
+      <div class="stat-card">
+        <span>📋</span>
+        <div>
+          <p>Pendientes</p>
+          <strong>{{ contarPorEstado('En revisión') }}</strong>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <span>✅</span>
+        <div>
+          <p>Aprobadas</p>
+          <strong>{{ contarPorEstado('Aprobado') }}</strong>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <span>⚠️</span>
+        <div>
+          <p>Observadas</p>
+          <strong>{{ contarPorEstado('Observado') }}</strong>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <span>📊</span>
+        <div>
+          <p>Total</p>
+          <strong>{{ totalSolicitudes() }}</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="table-card">
+      <h3>Solicitudes recientes</h3>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Código</th>
+            <th>Estudiante</th>
+            <th>Grado</th>
+            <th>Institución</th>
+            <th>Estado</th>
+            <th>Acción</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let solicitud of solicitudes">
+            <td>{{ solicitud.codigo }}</td>
+            <td>{{ solicitud.nombreEstudiante }}</td>
+            <td>{{ solicitud.grado }}</td>
+            <td>{{ solicitud.institucion }}</td>
+            <td>
+              <span class="estado" [ngClass]="{
+                'revision': solicitud.estado === 'En revisión',
+                'aprobado': solicitud.estado === 'Aprobado',
+                'observado': solicitud.estado === 'Observado'
+              }">
+                {{ solicitud.estado }}
+              </span>
+            </td>
+            <td>
+              <button>Ver</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>
+
+<app-footer></app-footer>
