@@ -3,12 +3,12 @@
 <main class="dashboard-page">
   <aside class="sidebar">
     <h3>Panel</h3>
-    <a class="active">Dashboard</a>
-    <a>Solicitudes</a>
-    <a>Aprobar solicitudes</a>
-    <a>Solicitudes observadas</a>
-    <a>Reportes</a>
-    <a>Cerrar sesión</a>
+    <a class="active" (click)="filtrarSolicitudes('todas')">Dashboard</a>
+    <a (click)="filtrarSolicitudes('todas')">Solicitudes</a>
+    <a (click)="filtrarSolicitudes('pendientes')">Aprobar solicitudes</a>
+    <a (click)="filtrarSolicitudes('observadas')">Solicitudes observadas</a>
+    <a (click)="filtrarSolicitudes('aprobadas')">Reportes</a>
+    <a (click)="cerrarSesion()">Cerrar sesión</a>
   </aside>
 
   <section class="content">
@@ -65,7 +65,7 @@
         </thead>
 
         <tbody>
-          <tr *ngFor="let solicitud of solicitudes">
+          <tr *ngFor="let solicitud of obtenerSolicitudesFiltradas()">
             <td>{{ solicitud.codigo }}</td>
             <td>{{ solicitud.nombreEstudiante }}</td>
             <td>{{ solicitud.grado }}</td>
@@ -80,7 +80,23 @@
               </span>
             </td>
             <td>
-              <button>Ver</button>
+              <div class="acciones">
+                <button (click)="verSolicitud(solicitud)">Ver</button>
+
+                <button class="btn-aprobar" *ngIf="solicitud.estado === 'En revisión'"
+                  (click)="aprobarSolicitud(solicitud)">
+                  Aprobar
+                </button>
+
+                <button class="btn-observar" *ngIf="solicitud.estado === 'En revisión'"
+                  (click)="observarSolicitud(solicitud)">
+                  Observar
+                </button>
+                
+                <button class="btn-eliminar" (click)="eliminarSolicitud(solicitud)">
+                  Eliminar
+                </button>
+              </div>
             </td>
           </tr>
         </tbody>

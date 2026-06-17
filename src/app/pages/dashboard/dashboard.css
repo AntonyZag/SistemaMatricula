@@ -164,3 +164,31 @@ button {
     grid-template-columns: 1fr;
   }
 }
+
+.acciones {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.btn-aprobar {
+  background: #22a06b;
+}
+
+.btn-observar {
+  background: #f59e0b;
+}
+
+.btn-eliminar{
+  background: #dc2626;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-left: 8px;
+}
+
+.btn-eliminar:hover{
+  background: #b91c1c;
+}

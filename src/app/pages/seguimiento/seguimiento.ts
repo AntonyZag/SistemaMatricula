@@ -4,6 +4,7 @@ import { Navbar } from '../../shared/navbar/navbar';
 import { Footer } from '../../shared/footer/footer';
 import { MatriculaService } from '../../services/matricula';
 import { Solicitud } from '../../models/solicitud';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-seguimiento',
@@ -14,7 +15,14 @@ import { Solicitud } from '../../models/solicitud';
 export class Seguimiento {
   solicitudes: Solicitud[] = [];
 
-  constructor(private matriculaService: MatriculaService) {
+  constructor(
+    private matriculaService: MatriculaService,
+    private router: Router
+  ) {
     this.solicitudes = this.matriculaService.listarSolicitudes();
+  }
+
+  volverInicio() {
+    this.router.navigate(['/inicio']);
   }
 }

@@ -11,7 +11,7 @@ import { Footer } from '../../shared/footer/footer';
 })
 export class Inicio {
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) { }
 
   irMatricula() {
     this.router.navigate(['/matricula']);
@@ -19,6 +19,10 @@ export class Inicio {
 
   irSeguimiento() {
     this.router.navigate(['/seguimiento']);
+  }
+
+  irInformacion() {
+    this.router.navigate(['/informacion']);
   }
 
 }

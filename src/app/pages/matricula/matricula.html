@@ -101,6 +101,7 @@
     </section>
 
     <div class="actions">
+      <button class="secondary" type="button" (click)="volverInicio()">Volver al inicio</button>
       <button class="secondary" *ngIf="paso > 1" (click)="anterior()">Anterior</button>
       <button class="primary" *ngIf="paso < 4" (click)="siguiente()">Siguiente</button>
       <button class="primary" *ngIf="paso === 4" (click)="finalizar()">Finalizar</button>

@@ -4,6 +4,7 @@ import { Inicio } from './pages/inicio/inicio';
 import { Matricula } from './pages/matricula/matricula';
 import { Seguimiento } from './pages/seguimiento/seguimiento';
 import { Dashboard } from './pages/dashboard/dashboard';
+import { Informacion } from './pages/informacion/informacion';
 
 export const routes: Routes = [
   { path: '', component: Login },
@@ -11,5 +12,7 @@ export const routes: Routes = [
   { path: 'matricula', component: Matricula },
   { path: 'seguimiento', component: Seguimiento },
   { path: 'dashboard', component: Dashboard },
-  { path: '**', redirectTo: '' }
+  { path: 'informacion', component: Informacion },
+  { path: '**', redirectTo: '' },
+  
 ];

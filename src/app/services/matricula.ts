@@ -6,30 +6,39 @@ import { Solicitud } from '../models/solicitud';
 })
 export class MatriculaService {
 
-  private solicitudes: Solicitud[] = [
-    {
-      codigo: 'MAT-2024-000125',
-      nombreEstudiante: 'María Pérez Gómez',
-      dniEstudiante: '74581236',
-      fechaNacimiento: '2017-05-10',
-      grado: '1° Primaria',
-      institucion: 'I.E. Mariscal Castilla',
-      nombreApoderado: 'Juan Pérez',
-      dniApoderado: '45678912',
-      telefono: '987654321',
-      correo: 'juanperez@gmail.com',
-      parentesco: 'Padre',
-      estado: 'En revisión',
-      fechaRegistro: '23/11/2024'
+
+  private solicitudes: Solicitud[] = [];
+
+  constructor() {
+    const datosGuardados = localStorage.getItem('solicitudes');
+
+    if (datosGuardados) {
+      this.solicitudes = JSON.parse(datosGuardados);
     }
-  ];
+  }
 
   registrarSolicitud(solicitud: Solicitud) {
+
     this.solicitudes.push(solicitud);
+
+    localStorage.setItem(
+      'solicitudes',
+      JSON.stringify(this.solicitudes)
+    );
+
   }
 
   listarSolicitudes(): Solicitud[] {
     return this.solicitudes;
+  }
+
+  actualizarSolicitudes() {
+    localStorage.setItem('solicitudes', JSON.stringify(this.solicitudes));
+  }
+
+  eliminarSolicitud(codigo: string) {
+    this.solicitudes = this.solicitudes.filter(s => s.codigo !== codigo);
+    this.actualizarSolicitudes();
   }
 
   generarCodigo(): string {
@@ -37,3 +46,4 @@ export class MatriculaService {
     return `MAT-2024-${numero.toString().padStart(6, '0')}`;
   }
 }
+
