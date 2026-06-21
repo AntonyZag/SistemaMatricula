@@ -148,3 +148,14 @@
   width: auto;
   height: auto;
 }
+
+.campo-formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.campo-formulario input {
+  width: 100%;
+}

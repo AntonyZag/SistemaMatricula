@@ -89,3 +89,13 @@ td {
 .btn-volver:hover {
   background: #1d4ed8;
 }
+
+.observacion {
+  color: #b45309;
+  font-weight: 600;
+}
+
+.sin-observacion {
+  color: #6b7280;
+  font-size: 14px;
+}

@@ -1,0 +1,58 @@
+.info-page {
+  min-height: calc(100vh - 120px);
+  background: #f4f7fb;
+  padding: 50px 80px;
+}
+
+.info-card {
+  background: white;
+  border-radius: 22px;
+  padding: 40px;
+  max-width: 1200px;
+  margin: auto;
+  box-shadow: 0 8px 24px rgba(15, 47, 99, 0.10);
+}
+
+h1 {
+  color: #123263;
+  font-size: 34px;
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  color: #5d6b82;
+  margin-bottom: 28px;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.box {
+  background: #eaf2ff;
+  border-radius: 16px;
+  padding: 24px;
+}
+
+.box h2 {
+  color: #123263;
+  margin-bottom: 12px;
+}
+
+li {
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+
+.btn-volver {
+  margin-top: 28px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 14px 24px;
+  font-weight: bold;
+  cursor: pointer;
+}

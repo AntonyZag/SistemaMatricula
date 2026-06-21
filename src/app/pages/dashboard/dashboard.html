@@ -3,17 +3,27 @@
 <main class="dashboard-page">
   <aside class="sidebar">
     <h3>Panel</h3>
-    <a class="active" (click)="filtrarSolicitudes('todas')">Dashboard</a>
-    <a (click)="filtrarSolicitudes('todas')">Solicitudes</a>
-    <a (click)="filtrarSolicitudes('pendientes')">Aprobar solicitudes</a>
-    <a (click)="filtrarSolicitudes('observadas')">Solicitudes observadas</a>
-    <a (click)="filtrarSolicitudes('aprobadas')">Reportes</a>
+    <a [class.active]="filtroActual === 'todas'" (click)="filtrarSolicitudes('todas')">
+      Dashboard
+    </a>
+
+    <a [class.active]="filtroActual === 'pendientes'" (click)="filtrarSolicitudes('pendientes')">
+      Aprobar solicitudes
+    </a>
+
+    <a [class.active]="filtroActual === 'observadas'" (click)="filtrarSolicitudes('observadas')">
+      Solicitudes observadas
+    </a>
+
+    <a [class.active]="filtroActual === 'aprobadas'" (click)="filtrarSolicitudes('aprobadas')">
+      Solicitudes aprobadas
+    </a>
     <a (click)="cerrarSesion()">Cerrar sesión</a>
   </aside>
 
   <section class="content">
-    <h2>Dashboard administrativo</h2>
-    <p class="subtitle">Resumen general de solicitudes de matrícula escolar.</p>
+    <h1>{{ obtenerTituloDashboard() }}</h1>
+    <p>{{ obtenerSubtituloDashboard() }}</p>
 
     <div class="stats">
       <div class="stat-card">
@@ -59,6 +69,7 @@
             <th>Estudiante</th>
             <th>Grado</th>
             <th>Institución</th>
+            <th>Fecha</th>
             <th>Estado</th>
             <th>Acción</th>
           </tr>
@@ -70,6 +81,8 @@
             <td>{{ solicitud.nombreEstudiante }}</td>
             <td>{{ solicitud.grado }}</td>
             <td>{{ solicitud.institucion }}</td>
+            <td>{{ solicitud.fechaRegistro }}</td>
+            
             <td>
               <span class="estado" [ngClass]="{
                 'revision': solicitud.estado === 'En revisión',
@@ -92,7 +105,7 @@
                   (click)="observarSolicitud(solicitud)">
                   Observar
                 </button>
-                
+
                 <button class="btn-eliminar" (click)="eliminarSolicitud(solicitud)">
                   Eliminar
                 </button>

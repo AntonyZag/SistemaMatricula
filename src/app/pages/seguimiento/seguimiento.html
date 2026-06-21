@@ -17,6 +17,7 @@
           <th>Institución</th>
           <th>Fecha</th>
           <th>Estado</th>
+          <th>Observación</th>
         </tr>
       </thead>
 
@@ -36,6 +37,17 @@
               {{ solicitud.estado }}
             </span>
           </td>
+
+          <td>
+            <span *ngIf="solicitud.observacion; else sinObservacion" class="observacion">
+              {{ solicitud.observacion }}
+            </span>
+
+            <ng-template #sinObservacion>
+              <span class="sin-observacion">Sin observación</span>
+            </ng-template>
+          </td>
+
         </tr>
       </tbody>
     </table>

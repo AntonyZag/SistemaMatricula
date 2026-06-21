@@ -14,4 +14,10 @@ export interface Solicitud {
 
   estado: 'En revisión' | 'Aprobado' | 'Observado';
   fechaRegistro: string;
+
+  archivoDniEstudiante?: string;
+  archivoDniApoderado?: string;
+  archivoCertificado?: string;
+  observacion?: string;
+
 }

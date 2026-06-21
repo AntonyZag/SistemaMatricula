@@ -34,14 +34,28 @@ export class Dashboard {
     Swal.fire({
       title: 'Detalle de solicitud',
       html: `
-      <p><strong>Código:</strong> ${solicitud.codigo}</p>
-      <p><strong>Estudiante:</strong> ${solicitud.nombreEstudiante}</p>
-      <p><strong>DNI:</strong> ${solicitud.dniEstudiante}</p>
-      <p><strong>Grado:</strong> ${solicitud.grado}</p>
-      <p><strong>Institución:</strong> ${solicitud.institucion}</p>
-      <p><strong>Apoderado:</strong> ${solicitud.nombreApoderado}</p>
-      <p><strong>Teléfono:</strong> ${solicitud.telefono}</p>
-      <p><strong>Estado:</strong> ${solicitud.estado}</p>
+       <p><strong>Código:</strong> ${solicitud.codigo}</p>
+       <p><strong>Estudiante:</strong> ${solicitud.nombreEstudiante}</p>
+       <p><strong>DNI estudiante:</strong> ${solicitud.dniEstudiante}</p>
+       <p><strong>Grado:</strong> ${solicitud.grado}</p>
+       <p><strong>Institución:</strong> ${solicitud.institucion}</p>
+
+       <p><strong>Apoderado:</strong> ${solicitud.nombreApoderado}</p>
+       <p><strong>DNI apoderado:</strong> ${solicitud.dniApoderado}</p>
+       <p><strong>Teléfono:</strong> ${solicitud.telefono}</p>
+
+       <p><strong>Estado:</strong> ${solicitud.estado}</p>
+       <p><strong>Observación:</strong> ${solicitud.observacion || 'Sin observaciones comentadas'}</p>
+
+       <hr>
+
+       <p><strong>Documentos enviados</strong></p>
+
+       <p><strong>DNI estudiante:</strong> ${solicitud.archivoDniEstudiante || 'No registrado'}</p>
+
+       <p><strong>DNI apoderado:</strong> ${solicitud.archivoDniApoderado || 'No registrado'}</p>
+
+       <p><strong>Certificado:</strong> ${solicitud.archivoCertificado || 'No registrado'}</p>
     `,
       icon: 'info',
       confirmButtonText: 'Cerrar',
@@ -67,24 +81,66 @@ export class Dashboard {
 
   filtroActual: string = 'todas';
 
+  obtenerTituloDashboard(): string {
+    if (this.filtroActual === 'pendientes') {
+      return 'Solicitudes pendientes de aprobación';
+    }
+
+    if (this.filtroActual === 'observadas') {
+      return 'Solicitudes observadas';
+    }
+
+    if (this.filtroActual === 'aprobadas') {
+      return 'Solicitudes aprobadas';
+    }
+
+    if (this.filtroActual === 'reportes') {
+      return 'Reportes de matrícula';
+    }
+
+    return 'Dashboard administrativo';
+  }
+
+  obtenerSubtituloDashboard(): string {
+    if (this.filtroActual === 'pendientes') {
+      return 'Revise las solicitudes que aún necesitan aprobación.';
+    }
+
+    if (this.filtroActual === 'observadas') {
+      return 'Revise las solicitudes que tienen observaciones.';
+    }
+
+    if (this.filtroActual === 'aprobadas') {
+      return 'Revise las solicitudes aprobadas correctamente.';
+    }
+
+    if (this.filtroActual === 'reportes') {
+      return 'Resumen general de estados de matrícula.';
+    }
+
+    return 'Resumen general de solicitudes de matrícula escolar.';
+  }
+
   filtrarSolicitudes(filtro: string) {
     this.filtroActual = filtro;
   }
 
   obtenerSolicitudesFiltradas(): Solicitud[] {
+    let solicitudesFiltradas = this.solicitudes;
+
     if (this.filtroActual === 'pendientes') {
-      return this.solicitudes.filter(s => s.estado === 'En revisión');
+      solicitudesFiltradas = this.solicitudes.filter(s => s.estado === 'En revisión');
     }
 
     if (this.filtroActual === 'observadas') {
-      return this.solicitudes.filter(s => s.estado === 'Observado');
+      solicitudesFiltradas = this.solicitudes.filter(s => s.estado === 'Observado');
     }
 
     if (this.filtroActual === 'aprobadas') {
-      return this.solicitudes.filter(s => s.estado === 'Aprobado');
+      solicitudesFiltradas = this.solicitudes.filter(s => s.estado === 'Aprobado');
     }
 
-    return this.solicitudes;
+    return solicitudesFiltradas.slice().reverse();
   }
 
 
@@ -102,14 +158,35 @@ export class Dashboard {
   }
 
   observarSolicitud(solicitud: Solicitud) {
-    solicitud.estado = 'Observado';
-    this.matriculaService.actualizarSolicitudes();
-
     Swal.fire({
-      title: 'Solicitud observada',
-      text: 'La solicitud fue marcada como observada.',
-      icon: 'warning',
-      confirmButtonColor: '#2868e8'
+      title: 'Motivo de observación',
+      input: 'textarea',
+      inputPlaceholder: 'Ejemplo: DNI borroso, falta certificado, documento incorrecto...',
+      showCancelButton: true,
+      confirmButtonText: 'Guardar observación',
+      cancelButtonText: 'Cancelar',
+      confirmButtonColor: '#2868e8',
+      cancelButtonColor: '#6b7280',
+      inputValidator: (value) => {
+        if (!value) {
+          return 'Debe escribir un motivo de observación';
+        }
+        return null;
+      }
+    }).then((result) => {
+      if (result.isConfirmed) {
+        solicitud.estado = 'Observado';
+        solicitud.observacion = result.value;
+
+        this.matriculaService.actualizarSolicitudes();
+
+        Swal.fire({
+          title: 'Solicitud observada',
+          text: 'La observación fue guardada correctamente.',
+          icon: 'warning',
+          confirmButtonColor: '#2868e8'
+        });
+      }
     });
   }
 

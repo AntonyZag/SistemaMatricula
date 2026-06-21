@@ -36,7 +36,16 @@ export class Matricula {
   constructor(
     private matriculaService: MatriculaService,
     private router: Router
-  ) { }
+  ) {
+    const perfilUsuario = localStorage.getItem('perfilUsuario');
+    const dniUsuario = localStorage.getItem('dniUsuario');
+    const nombreUsuario = localStorage.getItem('nombreUsuario');
+
+    if (perfilUsuario === 'apoderado') {
+      this.solicitud.dniApoderado = dniUsuario || '';
+      this.solicitud.nombreApoderado = nombreUsuario || '';
+    }
+  }
 
   siguiente() {
     if (this.paso < 4) {
@@ -55,8 +64,35 @@ export class Matricula {
   }
 
   finalizar() {
+    if (
+      !this.solicitud.nombreEstudiante ||
+      !this.solicitud.dniEstudiante ||
+      !this.solicitud.grado ||
+      !this.solicitud.institucion ||
+      !this.solicitud.nombreApoderado ||
+      !this.solicitud.dniApoderado ||
+      !this.solicitud.telefono ||
+      !this.archivoDniEstudiante ||
+      !this.archivoDniApoderado 
+
+    ) {
+      Swal.fire({
+        title: 'Campos incompletos',
+        text: 'Por favor complete los datos obligatorios antes de finalizar.',
+        icon: 'warning',
+        confirmButtonText: 'Entendido',
+        confirmButtonColor: '#2868e8'
+      });
+      return;
+    }
+
     this.solicitud.codigo = this.matriculaService.generarCodigo();
     this.solicitud.fechaRegistro = new Date().toLocaleDateString();
+    this.solicitud.estado = 'En revisión';
+
+    this.solicitud.archivoDniEstudiante = this.archivoDniEstudiante;
+    this.solicitud.archivoDniApoderado = this.archivoDniApoderado;
+    this.solicitud.archivoCertificado = this.archivoCertificado;
 
     this.matriculaService.registrarSolicitud(this.solicitud);
 
@@ -75,5 +111,40 @@ export class Matricula {
     }).then(() => {
       this.router.navigate(['/seguimiento']);
     });
+  }
+  archivoDniEstudiante = '';
+  archivoDniApoderado = '';
+  archivoCertificado = '';
+
+  seleccionarArchivo(event: any, tipo: string) {
+    const archivo = event.target.files[0];
+
+    if (!archivo) return;
+
+    if (tipo === 'dniEstudiante') {
+      this.archivoDniEstudiante = archivo.name;
+    }
+
+    if (tipo === 'dniApoderado') {
+      this.archivoDniApoderado = archivo.name;
+    }
+
+    if (tipo === 'certificado') {
+      this.archivoCertificado = archivo.name;
+    }
+  }
+
+  eliminarArchivo(tipo: string) {
+    if (tipo === 'dniEstudiante') {
+      this.archivoDniEstudiante = '';
+    }
+
+    if (tipo === 'dniApoderado') {
+      this.archivoDniApoderado = '';
+    }
+
+    if (tipo === 'certificado') {
+      this.archivoCertificado = '';
+    }
   }
 }

@@ -19,7 +19,16 @@ export class Seguimiento {
     private matriculaService: MatriculaService,
     private router: Router
   ) {
-    this.solicitudes = this.matriculaService.listarSolicitudes();
+    const perfilUsuario = localStorage.getItem('perfilUsuario');
+    const dniUsuario = localStorage.getItem('dniUsuario');
+
+    if (perfilUsuario === 'administrativo') {
+      this.solicitudes = this.matriculaService.listarSolicitudes();
+    } else {
+      this.solicitudes = this.matriculaService
+        .listarSolicitudes()
+        .filter(s => s.dniApoderado === dniUsuario);
+    }
   }
 
   volverInicio() {

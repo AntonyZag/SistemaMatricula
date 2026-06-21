@@ -22,13 +22,19 @@
       <input [(ngModel)]="solicitud.fechaNacimiento" type="date">
 
       <label>Grado / Nivel</label>
-      <select [(ngModel)]="solicitud.grado">
+      <select [(ngModel)]="solicitud.grado" name="grado">
         <option value="">Seleccione grado o nivel</option>
-        <option>1° Primaria</option>
-        <option>2° Primaria</option>
-        <option>3° Primaria</option>
-        <option>1° Secundaria</option>
-        <option>2° Secundaria</option>
+        <option value="1° Primaria">1° Primaria</option>
+        <option value="2° Primaria">2° Primaria</option>
+        <option value="3° Primaria">3° Primaria</option>
+        <option value="4° Primaria">4° Primaria</option>
+        <option value="5° Primaria">5° Primaria</option>
+        <option value="6° Primaria">6° Primaria</option>
+        <option value="1° Secundaria">1° Secundaria</option>
+        <option value="2° Secundaria">2° Secundaria</option>
+        <option value="3° Secundaria">3° Secundaria</option>
+        <option value="4° Secundaria">4° Secundaria</option>
+        <option value="5° Secundaria">5° Secundaria</option>
       </select>
 
       <label>Institución educativa</label>
@@ -71,17 +77,54 @@
 
       <div class="document-row">
         <span>DNI del estudiante</span>
-        <button>Seleccionar archivo</button>
+
+        <label class="file-button">
+          Seleccionar archivo
+          <input type="file" (change)="seleccionarArchivo($event, 'dniEstudiante')">
+        </label>
+
+        <small *ngIf="archivoDniEstudiante" class="file-name">
+          ✓ {{ archivoDniEstudiante }}
+        </small>
+
+        <button *ngIf="archivoDniEstudiante" class="btn-quitar" type="button"
+          (click)="eliminarArchivo('dniEstudiante')">
+          Quitar
+        </button>
       </div>
 
       <div class="document-row">
         <span>DNI del apoderado</span>
-        <button>Seleccionar archivo</button>
+
+        <label class="file-button">
+          Seleccionar archivo
+          <input type="file" (change)="seleccionarArchivo($event, 'dniApoderado')">
+        </label>
+
+        <small *ngIf="archivoDniApoderado" class="file-name">
+          ✓ {{ archivoDniApoderado }}
+        </small>
+
+        <button *ngIf="archivoDniApoderado" class="btn-quitar" type="button" (click)="eliminarArchivo('dniApoderado')">
+          Quitar
+        </button>
       </div>
 
       <div class="document-row">
         <span>Certificado de estudios</span>
-        <button>Seleccionar archivo</button>
+
+        <label class="file-button">
+          Seleccionar archivo
+          <input type="file" (change)="seleccionarArchivo($event, 'certificado')">
+        </label>
+
+        <small *ngIf="archivoCertificado" class="file-name">
+          ✓ {{ archivoCertificado }}
+        </small>
+
+        <button *ngIf="archivoCertificado" class="btn-quitar" type="button" (click)="eliminarArchivo('certificado')">
+          Quitar
+        </button>
       </div>
 
       <p class="info">Formatos permitidos: JPG, PNG o PDF. Tamaño máximo: 5MB.</p>

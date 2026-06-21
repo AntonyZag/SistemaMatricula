@@ -25,4 +25,12 @@ export class Inicio {
     this.router.navigate(['/informacion']);
   }
 
+  cambiarUsuario() {
+    localStorage.removeItem('perfilUsuario');
+    localStorage.removeItem('dniUsuario');
+    localStorage.removeItem('nombreUsuario');
+
+    this.router.navigate(['/']);
+  }
+
 }

@@ -1,1 +1,55 @@
-<p>informacion works!</p>
+<app-navbar></app-navbar>
+
+<main class="info-page">
+  <section class="info-card">
+    <h1>Información de matrícula</h1>
+    <p class="subtitle">
+      Revise los requisitos antes de iniciar una solicitud de matrícula escolar.
+    </p>
+
+    <div class="info-grid">
+      <div class="box">
+        <h2>Tipos de matrícula</h2>
+        <ul>
+          <li>Matrícula nueva para estudiantes que ingresan por primera vez.</li>
+          <li>Traslado desde otra institución educativa.</li>
+          <li>Reingreso de estudiante que dejó de estudiar por un periodo.</li>
+        </ul>
+      </div>
+
+      <div class="box">
+        <h2>Documentos necesarios</h2>
+        <ul>
+          <li>DNI del estudiante.</li>
+          <li>DNI del apoderado.</li>
+          <li>Certificado de estudios, si viene de otro colegio.</li>
+          <li>Documento de traslado, si corresponde.</li>
+        </ul>
+      </div>
+
+      <div class="box">
+        <h2>Pasos del trámite</h2>
+        <ol>
+          <li>Ingresar con el DNI del apoderado.</li>
+          <li>Registrar los datos del estudiante.</li>
+          <li>Registrar los datos del apoderado.</li>
+          <li>Adjuntar los documentos solicitados.</li>
+          <li>Enviar la solicitud y revisar el seguimiento.</li>
+        </ol>
+      </div>
+
+      <div class="box">
+        <h2>Recomendaciones</h2>
+        <ul>
+          <li>Tenga sus documentos preparados antes de iniciar.</li>
+          <li>Revise bien los datos antes de finalizar.</li>
+          <li>Consulte el estado de su solicitud en la opción Seguimiento.</li>
+        </ul>
+      </div>
+    </div>
+
+    <button class="btn-volver" (click)="volverInicio()">Volver al inicio</button>
+  </section>
+</main>
+
+<app-footer></app-footer>

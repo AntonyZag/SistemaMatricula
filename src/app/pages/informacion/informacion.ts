@@ -1,9 +1,18 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { Navbar } from '../../shared/navbar/navbar';
+import { Footer } from '../../shared/footer/footer';
 
 @Component({
   selector: 'app-informacion',
-  imports: [],
+  imports: [Navbar, Footer],
   templateUrl: './informacion.html',
-  styleUrl: './informacion.css',
+  styleUrl: './informacion.css'
 })
-export class Informacion {}
+export class Informacion {
+  constructor(private router: Router) {}
+
+  volverInicio() {
+    this.router.navigate(['/inicio']);
+  }
+}

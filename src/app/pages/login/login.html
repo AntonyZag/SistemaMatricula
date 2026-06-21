@@ -55,10 +55,26 @@
       </div>
 
       <label for="dni">DNI</label>
-      <input id="dni" type="text" placeholder="Ingrese su DNI">
+      <input id="dni" name="dni" type="text" maxlength="8" [(ngModel)]="dni" placeholder="Ingrese su DNI">
 
-      <label for="password">Contraseña</label>
-      <input id="password" type="password" placeholder="Ingrese su contraseña">
+      <div *ngIf="perfil === 'apoderado'" class="campo-formulario">
+        <label for="nombreApoderado">Nombre del apoderado</label>
+        <input id="nombreApoderado" name="nombreApoderado" type="text" [(ngModel)]="nombreApoderado"
+          placeholder="Ingrese su nombre completo">
+      </div>
+
+      <div *ngIf="perfil === 'administrativo'" class="campo-formulario">
+        <label for="password">Contraseña</label>
+        <input id="password" name="password" type="password" [(ngModel)]="password" placeholder="Ingrese su contraseña">
+      </div>
+
+      <p class="nota-login" *ngIf="perfil === 'apoderado'">
+        Para apoderados, solo se usará el DNI para ingresar al sistema.
+      </p>
+
+      <p class="nota-login" *ngIf="perfil === 'administrativo'">
+        Para el prototipo, la contraseña administrativa será igual al DNI.
+      </p>
 
       <button type="button" (click)="ingresar()">Ingresar</button>
     </form>
