@@ -18,6 +18,7 @@
           <th>Fecha</th>
           <th>Estado</th>
           <th>Observación</th>
+          <th>Documentos</th>
         </tr>
       </thead>
 
@@ -46,6 +47,14 @@
             <ng-template #sinObservacion>
               <span class="sin-observacion">Sin observación</span>
             </ng-template>
+          </td>
+
+          <td>
+            <div class="documentos">
+              <div>{{ solicitud.archivoDniEstudiante || 'Sin DNI estudiante' }}</div>
+              <div>{{ solicitud.archivoDniApoderado || 'Sin DNI apoderado' }}</div>
+              <div>{{ solicitud.archivoCertificado || 'Sin certificado' }}</div>
+            </div>
           </td>
 
         </tr>

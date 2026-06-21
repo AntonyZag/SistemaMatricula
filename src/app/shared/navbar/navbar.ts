@@ -27,7 +27,7 @@ export class Navbar {
     return this.nombre || 'Apoderado';
   }
 
-  obtenerRolUsuario() {
+  obtenerDniUsuario() {
     if (this.perfil === 'administrativo') {
       return 'Personal administrativo';
     }

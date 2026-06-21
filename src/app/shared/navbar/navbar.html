@@ -16,7 +16,12 @@
   </div>
 
   <div class="user-info" *ngIf="!estaEnLogin()">
-    <strong>{{ obtenerNombreUsuario() }}</strong>
-    <span>{{ obtenerRolUsuario() }}</span>
+    <strong class="nombre-usuario">
+      {{ obtenerNombreUsuario() }}
+    </strong>
+
+    <span class="dni-usuario">
+      {{ obtenerDniUsuario() }}
+    </span>
   </div>
 </header>
