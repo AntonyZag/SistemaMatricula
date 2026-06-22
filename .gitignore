@@ -38,6 +38,11 @@ yarn-error.log
 testem.log
 /typings
 __screenshots__/
+__pycache__/
+*.py[cod]
+
+# Local backend environment
+backend/.env
 
 # System files
 .DS_Store
