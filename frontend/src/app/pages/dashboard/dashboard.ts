@@ -21,10 +21,30 @@ export class Dashboard {
     private router: Router
   ) {
     this.solicitudes = this.matriculaService.listarSolicitudes();
+    this.cargarSolicitudes();
+  }
+
+  cargarSolicitudes() {
+    this.matriculaService.listarSolicitudesApi().subscribe({
+      next: (solicitudes) => {
+        this.solicitudes = solicitudes;
+      },
+      error: () => {
+        this.solicitudes = this.matriculaService.listarSolicitudes();
+      }
+    });
   }
 
   contarPorEstado(estado: string): number {
+    if (this.esEstadoEnRevision(estado)) {
+      return this.solicitudes.filter(s => this.esEstadoEnRevision(s.estado)).length;
+    }
+
     return this.solicitudes.filter(s => s.estado === estado).length;
+  }
+
+  esEstadoEnRevision(estado: string): boolean {
+    return estado === 'En revisión' || estado === 'En revision' || estado === 'En revisiÃ³n';
   }
 
   totalSolicitudes(): number {
@@ -129,7 +149,7 @@ export class Dashboard {
     let solicitudesFiltradas = this.solicitudes;
 
     if (this.filtroActual === 'pendientes') {
-      solicitudesFiltradas = this.solicitudes.filter(s => s.estado === 'En revisión');
+      solicitudesFiltradas = this.solicitudes.filter(s => this.esEstadoEnRevision(s.estado));
     }
 
     if (this.filtroActual === 'observadas') {
@@ -145,15 +165,29 @@ export class Dashboard {
 
 
   aprobarSolicitud(solicitud: Solicitud) {
-    solicitud.estado = 'Aprobado';
-    this.matriculaService.actualizarSolicitudes();
+    this.matriculaService.actualizarEstadoSolicitudApi(solicitud.codigo, 'Aprobado').subscribe({
+      next: (solicitudActualizada) => {
+        solicitud.estado = solicitudActualizada.estado;
+        solicitud.observacion = solicitudActualizada.observacion;
 
+        Swal.fire({
+          title: 'Solicitud aprobada',
+          text: 'La matrícula fue aprobada correctamente.',
+          icon: 'success',
+          confirmButtonColor: '#2868e8'
+        });
+      },
+      error: () => {
+        solicitud.estado = 'Aprobado';
+        this.matriculaService.actualizarSolicitudes();
 
-    Swal.fire({
-      title: 'Solicitud aprobada',
-      text: 'La matrícula fue aprobada correctamente.',
-      icon: 'success',
-      confirmButtonColor: '#2868e8'
+        Swal.fire({
+          title: 'Solicitud aprobada',
+          text: 'La matrícula fue aprobada correctamente.',
+          icon: 'success',
+          confirmButtonColor: '#2868e8'
+        });
+      }
     });
   }
 
@@ -175,16 +209,35 @@ export class Dashboard {
       }
     }).then((result) => {
       if (result.isConfirmed) {
-        solicitud.estado = 'Observado';
-        solicitud.observacion = result.value;
+        this.matriculaService.actualizarEstadoSolicitudApi(
+          solicitud.codigo,
+          'Observado',
+          result.value
+        ).subscribe({
+          next: (solicitudActualizada) => {
+            solicitud.estado = solicitudActualizada.estado;
+            solicitud.observacion = solicitudActualizada.observacion;
 
-        this.matriculaService.actualizarSolicitudes();
+            Swal.fire({
+              title: 'Solicitud observada',
+              text: 'La observación fue guardada correctamente.',
+              icon: 'warning',
+              confirmButtonColor: '#2868e8'
+            });
+          },
+          error: () => {
+            solicitud.estado = 'Observado';
+            solicitud.observacion = result.value;
 
-        Swal.fire({
-          title: 'Solicitud observada',
-          text: 'La observación fue guardada correctamente.',
-          icon: 'warning',
-          confirmButtonColor: '#2868e8'
+            this.matriculaService.actualizarSolicitudes();
+
+            Swal.fire({
+              title: 'Solicitud observada',
+              text: 'La observación fue guardada correctamente.',
+              icon: 'warning',
+              confirmButtonColor: '#2868e8'
+            });
+          }
         });
       }
     });
@@ -202,13 +255,26 @@ export class Dashboard {
       cancelButtonColor: '#6b7280'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.matriculaService.eliminarSolicitud(solicitud.codigo);
-        this.solicitudes = this.matriculaService.listarSolicitudes();
+        this.matriculaService.eliminarSolicitudApi(solicitud.codigo).subscribe({
+          next: () => {
+            this.solicitudes = this.matriculaService.listarSolicitudes();
 
-        Swal.fire({
-          title: 'Solicitud eliminada',
-          icon: 'success',
-          confirmButtonColor: '#2868e8'
+            Swal.fire({
+              title: 'Solicitud eliminada',
+              icon: 'success',
+              confirmButtonColor: '#2868e8'
+            });
+          },
+          error: () => {
+            this.matriculaService.eliminarSolicitud(solicitud.codigo);
+            this.solicitudes = this.matriculaService.listarSolicitudes();
+
+            Swal.fire({
+              title: 'Solicitud eliminada',
+              icon: 'success',
+              confirmButtonColor: '#2868e8'
+            });
+          }
         });
       }
     });

@@ -12,7 +12,7 @@ export interface Solicitud {
   correo: string;
   parentesco: string;
 
-  estado: 'En revisión' | 'Aprobado' | 'Observado';
+  estado: 'En revisión' | 'En revision' | 'En revisiÃ³n' | 'Aprobado' | 'Observado';
   fechaRegistro: string;
 
   archivoDniEstudiante?: string;

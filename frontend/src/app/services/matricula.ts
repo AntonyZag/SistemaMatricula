@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable, tap } from 'rxjs';
 import { Solicitud } from '../models/solicitud';
 
 @Injectable({
@@ -8,8 +10,9 @@ export class MatriculaService {
 
 
   private solicitudes: Solicitud[] = [];
+  private apiUrl = 'http://127.0.0.1:8000/solicitudes';
 
-  constructor() {
+  constructor(private http: HttpClient) {
     const datosGuardados = localStorage.getItem('solicitudes');
 
     if (datosGuardados) {
@@ -26,6 +29,52 @@ export class MatriculaService {
       JSON.stringify(this.solicitudes)
     );
 
+  }
+
+  listarSolicitudesApi(): Observable<Solicitud[]> {
+    return this.http.get<Solicitud[]>(this.apiUrl).pipe(
+      tap(solicitudes => {
+        this.solicitudes = solicitudes;
+        this.actualizarSolicitudes();
+      })
+    );
+  }
+
+  registrarSolicitudApi(solicitud: Solicitud): Observable<Solicitud> {
+    return this.http.post<Solicitud>(this.apiUrl, solicitud).pipe(
+      tap(solicitudRegistrada => {
+        this.solicitudes.push(solicitudRegistrada);
+        this.actualizarSolicitudes();
+      })
+    );
+  }
+
+  actualizarEstadoSolicitudApi(
+    codigo: string,
+    estado: Solicitud['estado'],
+    observacion?: string
+  ): Observable<Solicitud> {
+    return this.http.patch<Solicitud>(
+      `${this.apiUrl}/${codigo}/estado`,
+      { estado, observacion: observacion || null }
+    ).pipe(
+      tap(solicitudActualizada => {
+        const indice = this.solicitudes.findIndex(s => s.codigo === codigo);
+
+        if (indice >= 0) {
+          this.solicitudes[indice] = solicitudActualizada;
+          this.actualizarSolicitudes();
+        }
+      })
+    );
+  }
+
+  eliminarSolicitudApi(codigo: string): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${codigo}`).pipe(
+      tap(() => {
+        this.eliminarSolicitud(codigo);
+      })
+    );
   }
 
   listarSolicitudes(): Solicitud[] {

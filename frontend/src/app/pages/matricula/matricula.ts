@@ -45,6 +45,10 @@ export class Matricula {
       this.solicitud.dniApoderado = dniUsuario || '';
       this.solicitud.nombreApoderado = nombreUsuario || '';
     }
+
+    this.matriculaService.listarSolicitudesApi().subscribe({
+      error: () => {}
+    });
   }
 
   siguiente() {
@@ -94,8 +98,18 @@ export class Matricula {
     this.solicitud.archivoDniApoderado = this.archivoDniApoderado;
     this.solicitud.archivoCertificado = this.archivoCertificado;
 
-    this.matriculaService.registrarSolicitud(this.solicitud);
+    this.matriculaService.registrarSolicitudApi(this.solicitud).subscribe({
+      next: () => {
+        this.mostrarRegistroExitoso();
+      },
+      error: () => {
+        this.matriculaService.registrarSolicitud(this.solicitud);
+        this.mostrarRegistroExitoso();
+      }
+    });
+  }
 
+  mostrarRegistroExitoso() {
     Swal.fire({
       title: 'Solicitud registrada correctamente',
       html: `
