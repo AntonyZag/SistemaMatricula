@@ -3,7 +3,12 @@ import { CommonModule } from '@angular/common';
 import { Navbar } from '../../shared/navbar/navbar';
 import { Footer } from '../../shared/footer/footer';
 import { MatriculaService } from '../../services/matricula';
-import { Solicitud } from '../../models/solicitud';
+import {
+  ESTADO_APROBADO,
+  ESTADO_EN_REVISION,
+  ESTADO_OBSERVADO,
+  Solicitud
+} from '../../models/solicitud';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 
@@ -15,6 +20,9 @@ import Swal from 'sweetalert2';
 })
 export class Dashboard {
   solicitudes: Solicitud[] = [];
+  estadoEnRevision = ESTADO_EN_REVISION;
+  estadoAprobado = ESTADO_APROBADO;
+  estadoObservado = ESTADO_OBSERVADO;
 
   constructor(
     private matriculaService: MatriculaService,
@@ -44,7 +52,7 @@ export class Dashboard {
   }
 
   esEstadoEnRevision(estado: string): boolean {
-    return estado === 'En revisión' || estado === 'En revision' || estado === 'En revisiÃ³n';
+    return estado === ESTADO_EN_REVISION;
   }
 
   totalSolicitudes(): number {
@@ -153,11 +161,11 @@ export class Dashboard {
     }
 
     if (this.filtroActual === 'observadas') {
-      solicitudesFiltradas = this.solicitudes.filter(s => s.estado === 'Observado');
+      solicitudesFiltradas = this.solicitudes.filter(s => s.estado === ESTADO_OBSERVADO);
     }
 
     if (this.filtroActual === 'aprobadas') {
-      solicitudesFiltradas = this.solicitudes.filter(s => s.estado === 'Aprobado');
+      solicitudesFiltradas = this.solicitudes.filter(s => s.estado === ESTADO_APROBADO);
     }
 
     return solicitudesFiltradas.slice().reverse();
@@ -165,7 +173,7 @@ export class Dashboard {
 
 
   aprobarSolicitud(solicitud: Solicitud) {
-    this.matriculaService.actualizarEstadoSolicitudApi(solicitud.codigo, 'Aprobado').subscribe({
+    this.matriculaService.actualizarEstadoSolicitudApi(solicitud.codigo, ESTADO_APROBADO).subscribe({
       next: (solicitudActualizada) => {
         solicitud.estado = solicitudActualizada.estado;
         solicitud.observacion = solicitudActualizada.observacion;
@@ -178,7 +186,7 @@ export class Dashboard {
         });
       },
       error: () => {
-        solicitud.estado = 'Aprobado';
+        solicitud.estado = ESTADO_APROBADO;
         this.matriculaService.actualizarSolicitudes();
 
         Swal.fire({
@@ -211,7 +219,7 @@ export class Dashboard {
       if (result.isConfirmed) {
         this.matriculaService.actualizarEstadoSolicitudApi(
           solicitud.codigo,
-          'Observado',
+          ESTADO_OBSERVADO,
           result.value
         ).subscribe({
           next: (solicitudActualizada) => {
@@ -226,7 +234,7 @@ export class Dashboard {
             });
           },
           error: () => {
-            solicitud.estado = 'Observado';
+            solicitud.estado = ESTADO_OBSERVADO;
             solicitud.observacion = result.value;
 
             this.matriculaService.actualizarSolicitudes();

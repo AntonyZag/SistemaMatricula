@@ -23,7 +23,7 @@ BEGIN
         correo NVARCHAR(150) NULL,
         parentesco NVARCHAR(80) NULL,
 
-        estado NVARCHAR(30) NOT NULL CONSTRAINT DF_Solicitudes_estado DEFAULT 'En revision',
+        estado NVARCHAR(30) NOT NULL CONSTRAINT DF_Solicitudes_estado DEFAULT N'En revisión',
         fechaRegistro NVARCHAR(30) NOT NULL,
 
         archivoDniEstudiante NVARCHAR(255) NULL,
@@ -37,6 +37,41 @@ BEGIN
 END;
 GO
 
+UPDATE dbo.Solicitudes
+SET estado = N'En revisión'
+WHERE UPPER(REPLACE(estado, N'Ó', N'O')) IN (N'EN REVISION', N'EN REVISIÓN')
+   OR estado IN (N'En revision', N'En revisiÃ³n', N'En revisiÃƒÂ³n');
+GO
+
+UPDATE dbo.Solicitudes
+SET estado = N'Aprobado'
+WHERE UPPER(estado) = N'APROBADO';
+GO
+
+UPDATE dbo.Solicitudes
+SET estado = N'Observado'
+WHERE UPPER(estado) = N'OBSERVADO';
+GO
+
+IF OBJECT_ID('dbo.DF_Solicitudes_estado', 'D') IS NOT NULL
+BEGIN
+    ALTER TABLE dbo.Solicitudes
+    DROP CONSTRAINT DF_Solicitudes_estado;
+END;
+GO
+
+ALTER TABLE dbo.Solicitudes
+ADD CONSTRAINT DF_Solicitudes_estado DEFAULT N'En revisión' FOR estado;
+GO
+
+IF OBJECT_ID('dbo.CK_Solicitudes_estado', 'C') IS NULL
+BEGIN
+    ALTER TABLE dbo.Solicitudes
+    ADD CONSTRAINT CK_Solicitudes_estado
+    CHECK (estado IN (N'En revisión', N'Aprobado', N'Observado'));
+END;
+GO
+
 IF NOT EXISTS (
     SELECT 1
     FROM sys.indexes
@@ -44,6 +79,7 @@ IF NOT EXISTS (
       AND object_id = OBJECT_ID('dbo.Solicitudes')
 )
 BEGIN
+
     CREATE INDEX IX_Solicitudes_dniApoderado
     ON dbo.Solicitudes (dniApoderado);
 END;

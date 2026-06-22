@@ -1,3 +1,9 @@
+export type EstadoSolicitud = 'En revisión' | 'Aprobado' | 'Observado';
+
+export const ESTADO_EN_REVISION: EstadoSolicitud = 'En revisión';
+export const ESTADO_APROBADO: EstadoSolicitud = 'Aprobado';
+export const ESTADO_OBSERVADO: EstadoSolicitud = 'Observado';
+
 export interface Solicitud {
   codigo: string;
   nombreEstudiante: string;
@@ -12,7 +18,7 @@ export interface Solicitud {
   correo: string;
   parentesco: string;
 
-  estado: 'En revisión' | 'En revision' | 'En revisiÃ³n' | 'Aprobado' | 'Observado';
+  estado: EstadoSolicitud;
   fechaRegistro: string;
 
   archivoDniEstudiante?: string;

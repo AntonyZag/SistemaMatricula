@@ -13,7 +13,13 @@ class SolicitudService:
     def listar(self):
         return self.repository.listar()
 
+    def generar_siguiente_codigo(self):
+        return {"codigo": self.repository.generar_siguiente_codigo()}
+
     def crear(self, solicitud: SolicitudCrear):
+        if not solicitud.codigo:
+            solicitud.codigo = self.repository.generar_siguiente_codigo()
+
         if self.repository.obtener_por_codigo(solicitud.codigo):
             raise HTTPException(
                 status_code=status.HTTP_409_CONFLICT,

@@ -1,3 +1,5 @@
+import re
+
 from sqlalchemy.orm import Session
 
 from src.models.solicitud_model import SolicitudModel
@@ -21,6 +23,22 @@ class SolicitudRepository:
             .filter(SolicitudModel.codigo == codigo)
             .first()
         )
+
+    def generar_siguiente_codigo(self) -> str:
+        prefijo = "MAT-2024-"
+        numero_inicial = 126
+        patron = re.compile(rf"^{prefijo}(\d+)$")
+        codigos = self.db.query(SolicitudModel.codigo).all()
+        numeros = []
+
+        for (codigo,) in codigos:
+            coincidencia = patron.match(codigo or "")
+
+            if coincidencia:
+                numeros.append(int(coincidencia.group(1)))
+
+        siguiente_numero = max(numeros, default=numero_inicial - 1) + 1
+        return f"{prefijo}{siguiente_numero:06d}"
 
     def crear(self, solicitud: SolicitudCrear) -> SolicitudModel:
         nueva_solicitud = SolicitudModel(**solicitud.model_dump())

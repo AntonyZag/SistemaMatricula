@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Navbar } from '../../shared/navbar/navbar';
 import { Footer } from '../../shared/footer/footer';
 import { MatriculaService } from '../../services/matricula';
-import { Solicitud } from '../../models/solicitud';
+import { ESTADO_EN_REVISION, Solicitud } from '../../models/solicitud';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import Swal from 'sweetalert2';
@@ -29,7 +29,7 @@ export class Matricula {
     telefono: '',
     correo: '',
     parentesco: '',
-    estado: 'En revisión',
+    estado: ESTADO_EN_REVISION,
     fechaRegistro: ''
   };
 
@@ -90,14 +90,26 @@ export class Matricula {
       return;
     }
 
-    this.solicitud.codigo = this.matriculaService.generarCodigo();
     this.solicitud.fechaRegistro = new Date().toLocaleDateString();
-    this.solicitud.estado = 'En revisión';
+    this.solicitud.estado = ESTADO_EN_REVISION;
 
     this.solicitud.archivoDniEstudiante = this.archivoDniEstudiante;
     this.solicitud.archivoDniApoderado = this.archivoDniApoderado;
     this.solicitud.archivoCertificado = this.archivoCertificado;
 
+    this.matriculaService.generarCodigoApi().subscribe({
+      next: (respuesta) => {
+        this.solicitud.codigo = respuesta.codigo;
+        this.registrarSolicitud();
+      },
+      error: () => {
+        this.solicitud.codigo = this.matriculaService.generarCodigo();
+        this.registrarSolicitud();
+      }
+    });
+  }
+
+  registrarSolicitud() {
     this.matriculaService.registrarSolicitudApi(this.solicitud).subscribe({
       next: () => {
         this.mostrarRegistroExitoso();

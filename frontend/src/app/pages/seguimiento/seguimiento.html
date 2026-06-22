@@ -31,9 +31,9 @@
           <td>{{ solicitud.fechaRegistro }}</td>
           <td>
             <span class="estado" [ngClass]="{
-              'revision': solicitud.estado === 'En revisión',
-              'aprobado': solicitud.estado === 'Aprobado',
-              'observado': solicitud.estado === 'Observado'
+              'revision': solicitud.estado === estadoEnRevision,
+              'aprobado': solicitud.estado === estadoAprobado,
+              'observado': solicitud.estado === estadoObservado
             }">
               {{ solicitud.estado }}
             </span>

@@ -20,7 +20,7 @@ class SolicitudModel(Base):
     correo = Column(String(150), nullable=True)
     parentesco = Column(String(80), nullable=True)
 
-    estado = Column(String(30), nullable=False, default="En revision")
+    estado = Column(String(30), nullable=False, default="En revisión")
     fechaRegistro = Column(String(30), nullable=False)
 
     archivoDniEstudiante = Column(String(255), nullable=True)

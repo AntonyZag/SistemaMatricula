@@ -3,7 +3,12 @@ import { CommonModule } from '@angular/common';
 import { Navbar } from '../../shared/navbar/navbar';
 import { Footer } from '../../shared/footer/footer';
 import { MatriculaService } from '../../services/matricula';
-import { Solicitud } from '../../models/solicitud';
+import {
+  ESTADO_APROBADO,
+  ESTADO_EN_REVISION,
+  ESTADO_OBSERVADO,
+  Solicitud
+} from '../../models/solicitud';
 import { Router } from '@angular/router';
 
 @Component({
@@ -14,6 +19,9 @@ import { Router } from '@angular/router';
 })
 export class Seguimiento {
   solicitudes: Solicitud[] = [];
+  estadoEnRevision = ESTADO_EN_REVISION;
+  estadoAprobado = ESTADO_APROBADO;
+  estadoObservado = ESTADO_OBSERVADO;
 
   constructor(
     private matriculaService: MatriculaService,

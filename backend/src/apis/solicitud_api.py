@@ -17,6 +17,11 @@ def listar_solicitudes(db: Session = Depends(get_db)):
     return SolicitudService(db).listar()
 
 
+@router.get("/siguiente-codigo")
+def generar_siguiente_codigo(db: Session = Depends(get_db)):
+    return SolicitudService(db).generar_siguiente_codigo()
+
+
 @router.post("", response_model=SolicitudRespuesta, status_code=status.HTTP_201_CREATED)
 def crear_solicitud(solicitud: SolicitudCrear, db: Session = Depends(get_db)):
     return SolicitudService(db).crear(solicitud)

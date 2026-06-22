@@ -30,7 +30,7 @@
         <span>📋</span>
         <div>
           <p>Pendientes</p>
-          <strong>{{ contarPorEstado('En revisión') }}</strong>
+          <strong>{{ contarPorEstado(estadoEnRevision) }}</strong>
         </div>
       </div>
 
@@ -38,7 +38,7 @@
         <span>✅</span>
         <div>
           <p>Aprobadas</p>
-          <strong>{{ contarPorEstado('Aprobado') }}</strong>
+          <strong>{{ contarPorEstado(estadoAprobado) }}</strong>
         </div>
       </div>
 
@@ -46,7 +46,7 @@
         <span>⚠️</span>
         <div>
           <p>Observadas</p>
-          <strong>{{ contarPorEstado('Observado') }}</strong>
+          <strong>{{ contarPorEstado(estadoObservado) }}</strong>
         </div>
       </div>
 
@@ -85,9 +85,9 @@
             
             <td>
               <span class="estado" [ngClass]="{
-                'revision': solicitud.estado === 'En revisión',
-                'aprobado': solicitud.estado === 'Aprobado',
-                'observado': solicitud.estado === 'Observado'
+                'revision': esEstadoEnRevision(solicitud.estado),
+                'aprobado': solicitud.estado === estadoAprobado,
+                'observado': solicitud.estado === estadoObservado
               }">
                 {{ solicitud.estado }}
               </span>
@@ -96,12 +96,12 @@
               <div class="acciones">
                 <button (click)="verSolicitud(solicitud)">Ver</button>
 
-                <button class="btn-aprobar" *ngIf="solicitud.estado === 'En revisión'"
+                <button class="btn-aprobar" *ngIf="esEstadoEnRevision(solicitud.estado)"
                   (click)="aprobarSolicitud(solicitud)">
                   Aprobar
                 </button>
 
-                <button class="btn-observar" *ngIf="solicitud.estado === 'En revisión'"
+                <button class="btn-observar" *ngIf="esEstadoEnRevision(solicitud.estado)"
                   (click)="observarSolicitud(solicitud)">
                   Observar
                 </button>
