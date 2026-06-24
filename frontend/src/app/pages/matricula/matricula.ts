@@ -126,6 +126,7 @@ export class Matricula {
       title: 'Solicitud registrada correctamente',
       html: `
       <p>La solicitud de matrícula fue guardada con éxito.</p>
+      <p>Guarde este código para consultar el seguimiento de su solicitud.</p>
       <strong>Código de solicitud:</strong><br>
       <span style="font-size: 22px; color: #2868e8; font-weight: bold;">
         ${this.solicitud.codigo}

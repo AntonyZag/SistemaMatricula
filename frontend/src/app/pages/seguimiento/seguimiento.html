@@ -60,6 +60,11 @@
         </tr>
       </tbody>
     </table>
+
+    <p *ngIf="solicitudes.length === 0" class="subtitle">
+      Aún no tiene solicitudes registradas. Cuando registre una matrícula,
+      aparecerá aquí el estado de su solicitud.
+    </p>
   </section>
 </main>
 

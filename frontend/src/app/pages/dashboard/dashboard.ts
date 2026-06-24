@@ -171,29 +171,46 @@ export class Dashboard {
     return solicitudesFiltradas.slice().reverse();
   }
 
+  haySolicitudesFiltradas(): boolean {
+    return this.obtenerSolicitudesFiltradas().length > 0;
+  }
+
 
   aprobarSolicitud(solicitud: Solicitud) {
-    this.matriculaService.actualizarEstadoSolicitudApi(solicitud.codigo, ESTADO_APROBADO).subscribe({
-      next: (solicitudActualizada) => {
-        solicitud.estado = solicitudActualizada.estado;
-        solicitud.observacion = solicitudActualizada.observacion;
+    Swal.fire({
+      title: '¿Aprobar esta solicitud?',
+      text: 'La solicitud pasará al estado Aprobado.',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, aprobar',
+      cancelButtonText: 'Cancelar',
+      confirmButtonColor: '#16a34a',
+      cancelButtonColor: '#6b7280'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.matriculaService.actualizarEstadoSolicitudApi(solicitud.codigo, ESTADO_APROBADO).subscribe({
+          next: (solicitudActualizada) => {
+            solicitud.estado = solicitudActualizada.estado;
+            solicitud.observacion = solicitudActualizada.observacion;
 
-        Swal.fire({
-          title: 'Solicitud aprobada',
-          text: 'La matrícula fue aprobada correctamente.',
-          icon: 'success',
-          confirmButtonColor: '#2868e8'
-        });
-      },
-      error: () => {
-        solicitud.estado = ESTADO_APROBADO;
-        this.matriculaService.actualizarSolicitudes();
+            Swal.fire({
+              title: 'Solicitud aprobada',
+              text: 'La matrícula fue aprobada correctamente.',
+              icon: 'success',
+              confirmButtonColor: '#2868e8'
+            });
+          },
+          error: () => {
+            solicitud.estado = ESTADO_APROBADO;
+            this.matriculaService.actualizarSolicitudes();
 
-        Swal.fire({
-          title: 'Solicitud aprobada',
-          text: 'La matrícula fue aprobada correctamente.',
-          icon: 'success',
-          confirmButtonColor: '#2868e8'
+            Swal.fire({
+              title: 'Solicitud aprobada',
+              text: 'La matrícula fue aprobada correctamente.',
+              icon: 'success',
+              confirmButtonColor: '#2868e8'
+            });
+          }
         });
       }
     });

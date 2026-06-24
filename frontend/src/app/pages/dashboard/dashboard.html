@@ -114,6 +114,10 @@
           </tr>
         </tbody>
       </table>
+
+      <p *ngIf="!haySolicitudesFiltradas()" class="subtitle">
+        No hay solicitudes para mostrar en este filtro.
+      </p>
     </div>
   </section>
 </main>

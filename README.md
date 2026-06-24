@@ -1,59 +1,102 @@
 # SistemaMatricula
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.12.
+Sistema local de matrícula escolar desarrollado para Programación Web.
 
-## Development server
+## Tecnologías
 
-To start a local development server, run:
+- Frontend: Angular 21
+- Backend: FastAPI
+- Base de datos: SQL Server local
+- Conexión: Angular -> FastAPI -> SQL Server
 
-```bash
-ng serve
+## Base de datos
+
+La base usada por el proyecto es:
+
+```txt
+SistemaMatriculaDB
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Tabla principal:
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
+```txt
+dbo.Solicitudes
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Para ver los registros en SQL Server Management Studio:
 
-```bash
-ng generate --help
+```sql
+USE SistemaMatriculaDB;
+
+SELECT *
+FROM dbo.Solicitudes;
 ```
 
-## Building
+El script de creación y actualización de la base está en:
 
-To build the project run:
-
-```bash
-ng build
+```txt
+backend/sql/crear_base_datos.sql
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+## Levantar backend
 
-## Running unit tests
+Desde una terminal:
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
+```powershell
+cd backend
+uv run uvicorn main:app
 ```
 
-## Running end-to-end tests
+URLs útiles:
 
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
+```txt
+http://127.0.0.1:8000
+http://127.0.0.1:8000/docs
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+Swagger (`/docs`) permite probar la API FastAPI.
 
-## Additional Resources
+## Levantar frontend
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Desde otra terminal:
+
+```powershell
+cd frontend
+npm start
+```
+
+Abrir:
+
+```txt
+http://localhost:4200
+```
+
+## Flujo de prueba recomendado
+
+1. Ingresar como apoderado.
+2. Registrar una solicitud de matrícula.
+3. Revisar la solicitud en Seguimiento.
+4. Ingresar como administrativo.
+5. Revisar Dashboard.
+6. Aprobar, observar o eliminar una solicitud.
+7. Confirmar cambios en SQL Server con `SELECT * FROM dbo.Solicitudes;`.
+
+## Estados válidos
+
+El sistema usa estos estados:
+
+```txt
+En revisión
+Aprobado
+Observado
+```
+
+## Limpieza de datos de prueba
+
+Existe un script de apoyo en:
+
+```txt
+backend/sql/limpiar_datos_prueba.sql
+```
+
+Primero muestra posibles datos de prueba. El bloque `DELETE` está comentado para evitar borrados accidentales.
